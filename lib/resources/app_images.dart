@@ -6,6 +6,8 @@ class AppImages {
 
   static AssetImage graphSmall =
       const AssetImage('assets/images/graph_small.png');
+  static AssetImage statistics =
+      const AssetImage('assets/images/statistics.png');
 
   static SvgPicture svgNotificationIcon =
       SvgPicture.asset('assets/svgs/notification_icon.svg');
@@ -19,4 +21,6 @@ class AppImages {
   static SvgPicture svgAddIconWithCircle = SvgPicture.asset('assets/svgs/add_icon_with_circle.svg');
   static SvgPicture svgMovieIcon = SvgPicture.asset('assets/svgs/movie_icon.svg');
   static SvgPicture svgMusicIcon = SvgPicture.asset('assets/svgs/music_icon.svg');
+  static SvgPicture svgStatisticsIcon = SvgPicture.asset('assets/svgs/statistics_icon.svg');
+  static SvgPicture svgCircleArrowIcon = SvgPicture.asset('assets/svgs/circle_arrow_icon.svg');
 }
