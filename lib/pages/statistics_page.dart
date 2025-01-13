@@ -1,6 +1,10 @@
+import 'package:finance_app/components/date_time_extensions.dart';
+import 'package:finance_app/components/time_tab.dart';
+import 'package:finance_app/components/ui_models.dart';
 import 'package:finance_app/resources/app_colors.dart';
 import 'package:finance_app/resources/app_images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({super.key});
@@ -10,6 +14,20 @@ class StatisticsPage extends StatefulWidget {
 }
 
 class _StatisticsPageState extends State<StatisticsPage> {
+  int? selectedIndex = 0;
+
+  List<String> time = [
+    'Day',
+    'Week',
+    'Month',
+    'Year',
+  ];
+
+  List<Transactions> transactions = [
+    Transactions(icon: AppImages.svgMusicIcon, amount: '+ \$212.00'),
+    Transactions(icon: AppImages.svgMovieRecordingIcon, amount: '+ \$468.00'),
+    Transactions(icon: AppImages.svgMovieIcon, amount: '- \$642.00'),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,18 +82,49 @@ class _StatisticsPageState extends State<StatisticsPage> {
             const SizedBox(height: 29),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                timeSelection(selected: false, text: 'Day'),
-                timeSelection(selected: false, text: 'Week'),
-                timeSelection(selected: true, text: 'Month'),
-                timeSelection(selected: false, text: 'Year'),
-              ],
+              children: List.generate(
+                time.length,
+                (index) => TimeTab(
+                  text: time[index],
+                  isSelected: selectedIndex == index,
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 20, 25, 36),
               child: Column(
                 children: [
                   Image(image: AppImages.statistics),
+                  const SizedBox(height: 24),
+                  Container(
+                    padding:
+                        const EdgeInsets.only(left: 15, top: 18, right: 15),
+                    decoration: BoxDecoration(
+                      color: AppColors.containerColor,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Upcoming Payment',
+                          style: TextStyle(
+                              color: AppColors.defaultTextColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        const SizedBox(height: 21),
+                        ...(transactions).map(
+                          (e) => transaction(transactions: e),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -85,23 +134,58 @@ class _StatisticsPageState extends State<StatisticsPage> {
     );
   }
 
-  Widget timeSelection({required bool selected, required String text}) {
-    return selected
-        ? Container(
-            padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 4),
-            decoration: BoxDecoration(
-                color: AppColors.blue, borderRadius: BorderRadius.circular(5)),
-            child: Text(
-              text,
+  Widget transaction({required Transactions transactions}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 18),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: BoxDecoration(
+            color: const Color(0xFF373737),
+            borderRadius: BorderRadius.circular(20)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                iconContainer(icon: transactions.icon),
+                const SizedBox(width: 14),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'My Brand',
+                      style: TextStyle(
+                          color: AppColors.defaultTextColor,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      'Today, ${DateTime.now().friendlyDate()}',
+                      style: const TextStyle(
+                          color: Color(0xFF969696), fontSize: 12),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Text(
+              transactions.amount,
               style: const TextStyle(
                   color: AppColors.defaultTextColor,
-                  fontWeight: FontWeight.w600),
+                  fontWeight: FontWeight.w500),
             ),
-          )
-        : Text(
-            text,
-            style: const TextStyle(
-                color: AppColors.defaultTextColor, fontWeight: FontWeight.w600),
-          );
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget iconContainer({required SvgPicture icon}) {
+    return Container(
+      padding: const EdgeInsets.all(5),
+      decoration:
+          const BoxDecoration(color: Color(0xFF373737), shape: BoxShape.circle),
+      child: icon,
+    );
   }
 }
