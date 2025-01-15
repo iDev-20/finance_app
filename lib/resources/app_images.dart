@@ -27,4 +27,7 @@ class AppImages {
   static SvgPicture svgStatisticsIcon = SvgPicture.asset('assets/svgs/statistics_icon.svg');
   static SvgPicture svgCircleArrowIcon = SvgPicture.asset('assets/svgs/circle_arrow_icon.svg');
   static SvgPicture svgStickerIcon = SvgPicture.asset('assets/svgs/sticker_icon.svg');
+  static SvgPicture svgSliderArrows = SvgPicture.asset('assets/svgs/slider_arrows.svg');
+  static SvgPicture svgCurve = SvgPicture.asset('assets/svgs/curve.svg');
+  static SvgPicture svgCurveRectangleBlack = SvgPicture.asset('assets/svgs/curve_rectangle_black.svg');
 }

@@ -1,5 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:finance_app/components/app_section_container.dart';
 import 'package:finance_app/components/calc_button.dart';
+import 'package:finance_app/components/transfer_slide.dart';
 import 'package:finance_app/resources/app_colors.dart';
 import 'package:finance_app/resources/app_images.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +22,12 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
       expression += text;
     });
   }
+
   void clear(String text) {
     setState(() {
       expression = '';
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +54,7 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(26, 16, 26, 16),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppSectionContainer(
                     child: Row(
@@ -191,13 +195,58 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
                               callback: numClick,
                             ),
                             CalcButton(
-                              text: 'X',
+                              text: '⌫',
                               callback: clear,
                             ),
                           ],
                         ),
                       ],
                     ),
+                  ),
+                  Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      Container(
+                        height: 15,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            color: AppColors.containerColor,
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                      Positioned(
+                        left: 0,
+                        child: Container(
+                          height: 15,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
+                      ),
+                      Positioned(
+                        right: 0,
+                        child: Container(
+                          height: 15,
+                          width: 25,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // ClipPath(
+                  //   clipper: SideInsideCurveClipper(),
+                  //   child: Container(
+                  //     height: 15,
+                  //     width: 35,
+                  //       color: AppColors.containerColor,
+                  //   ),
+                  // ),
+                  TransferSlider(
+                    onTransfer: () {
+                      print('Transfer initiated');
+                    },
                   ),
                 ],
               ),
